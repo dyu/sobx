@@ -1,0 +1,24 @@
+{
+  "name": "sobx",
+  "version": "0.1.0",
+  "description": "s object/pojo observables for surplus",
+  "author": "dyu",
+  "main": "lib/index.js",
+  "typings": "lib/index",
+  "license": "Apache-2.0",
+  "README": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dyu/sobx.git"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "s-array": "^0.4.7",
+    "s-js": "^0.4.7"
+  },
+  "devDependencies": {
+    "typescript": "2.4.1"
+  }
+}
