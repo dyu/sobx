@@ -1,0 +1,7 @@
+node_modules
+target
+docs
+.vscode
+sync.sh
+release.sh
+
