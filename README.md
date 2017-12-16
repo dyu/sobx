@@ -39,18 +39,21 @@ export class App {
         p.disabled = !p.disabled
     }
 }
-export const AppV = (self: App) =>
+export const AppV = (self: App) => {
+    let p = self.p; p = p['$'];
+    return (
 <div>
   <button type="button" onClick={() => self.append('!')}>!</button>
-  <div>{self.p.msg}</div>
-  <GreetingV pojo={self.p.greeting} />
-  {self.p.msgs.map(msg =>
-    <button type="button" disabled={self.p.disabled}>
+  <div>{p.msg}</div>
+  <GreetingV pojo={p.greeting} />
+  {p.msgs.map(msg =>
+    <button type="button" disabled={p.disabled}>
       {msg}
     </button>
   )}
-  {self.p.greetings.map(greeting => <GreetingV pojo={greeting} />)}
+  {p.greetings.map(greeting => <GreetingV pojo={greeting} />)}
 </div>
+)}
 ```
 
 main.ts
