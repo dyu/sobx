@@ -1,12 +1,12 @@
 /**
- * Make the object observable.
+ * Make the object/pojo observable.
  */
-export declare function observable<T>(obj: T): T;
+export declare function observable<T>(obj: T, $?: any): T;
 /**
  * Bind the function to the object and wrap it on a dependency tracker.
  */
 export declare function bindTo(obj: any, fn: Function): Function;
 /**
- * Ignore this.
+ * Resolves the property value.
  */
-export declare function prop<T>(array: any, def: T): T;
+export declare function prop<T>(val: any, def: T): T;
