@@ -2,11 +2,13 @@
  * Make the object/pojo observable.
  */
 export declare function observable<T>(obj: T, $?: any): T;
+export declare function bindPrototypeTo<T>(obj: any, pt: T): T;
 /**
  * Bind the function to the object and wrap it on a dependency tracker.
  */
-export declare function bindTo(obj: any, fn: Function): Function;
+export declare function wrapAndBindTo(obj: any, fn: Function): Function;
 /**
- * Resolves the property value.
+ * Resolves the property value and returns the default if undefined.
  */
-export declare function prop<T>(val: any, def: T): T;
+export declare function prop<T>(val: any, def?: T): T;
+export declare function $$(obj: any, field?: string): any;

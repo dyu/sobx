@@ -3,14 +3,14 @@
 App.tsx
 ```ts
 import * as Surplus from 'surplus'; Surplus;
-import { observable } from 'sobx'
+import { $$, observable } from 'sobx'
 
 export interface Greeting {
     msg: string
 }
 export const GreetingV = ({pojo}: {pojo: Greeting}) =>
 <div>
-  <b>{pojo.msg}</b>
+  <b>{$$(pojo.msg)}</b>
 </div>
 
 export class App {
@@ -27,7 +27,7 @@ export class App {
     }
     
     constructor() {
-        observable(this.p)
+        observable(this.p, {})
     }
     
     append(suffix: string) {
@@ -44,10 +44,10 @@ export const AppV = (self: App) => {
     return (
 <div>
   <button type="button" onClick={() => self.append('!')}>!</button>
-  <div>{p.msg}</div>
+  <div>{$$(p.msg)}</div>
   <GreetingV pojo={p.greeting} />
   {p.msgs.map(msg =>
-    <button type="button" disabled={p.disabled}>
+    <button type="button" disabled={$$(p.disabled)}>
       {msg}
     </button>
   )}
