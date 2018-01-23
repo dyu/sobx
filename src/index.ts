@@ -56,6 +56,9 @@ function makeReactive(obj: any, key: string, val: any, $: any) {
  * Make the object/pojo observable.
  */
 export function observable<T>(obj: T, $?: any): T {
+    if ($ && typeof $ !== 'object') {
+        $ = undefined
+    }
     for (let key of Object.keys(obj)) {
         makeReactive(obj, key, obj[key], $)
     }
