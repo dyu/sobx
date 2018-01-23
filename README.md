@@ -1,7 +1,7 @@
 [s](https://github.com/adamhaile/s) object/pojo observables for [surplus](https://github.com/adamhaile/s)
 
 App.tsx
-```ts
+```tsx
 import * as Surplus from 'surplus'; Surplus;
 import { $$, observable } from 'sobx'
 
