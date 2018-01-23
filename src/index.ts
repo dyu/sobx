@@ -39,7 +39,9 @@ function defScalar(obj, key, val, $) {
 
 function makeReactive(obj: any, key: string, val: any, $: any) {
     var pd
-    if (typeof val === 'function' || (pd = Object.getOwnPropertyDescriptor(obj, key)) && pd.configurable === false) {
+    if (val === null || val === undefined) {
+        defScalar(obj, key, val, $)
+    } else if (typeof val === 'function' || (pd = Object.getOwnPropertyDescriptor(obj, key)) && pd.configurable === false) {
         if ($) $[key] = val
     } else if (Array.isArray(val)) {
         defArray(obj, key, SArray(val), $)
