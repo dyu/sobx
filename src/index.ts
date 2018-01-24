@@ -45,10 +45,16 @@ function makeReactive(obj: any, key: string, val: any, $: any) {
         if ($) $[key] = val
     } else if (Array.isArray(val)) {
         $ && defArray(obj, key, SArray(val), $)
-    } else if (typeof val === 'object') {
+    } else if (typeof val !== 'object') {
+        defScalar(obj, key, val, $)
+    } else if (key !== '_') {
         observable(val, $ && ($[key] = {}))
     } else {
-        defScalar(obj, key, val, $)
+        Object.defineProperty(obj, key, {
+            enumerable: false,
+            configurable: true,
+            value: observable(val, $)
+        })
     }
 }
 
