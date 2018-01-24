@@ -17,7 +17,7 @@ function defArray(obj, key, val, $) {
         set: (p) => Array.isArray(p) ? val(p) : (p !== val && val(p())),
         get: () => val
     })
-    $ && Object.defineProperty($, key, d)
+    Object.defineProperty($, key, d)
 }
 
 function defScalar(obj, key, val, $) {
@@ -44,7 +44,7 @@ function makeReactive(obj: any, key: string, val: any, $: any) {
     } else if (typeof val === 'function' || (pd = Object.getOwnPropertyDescriptor(obj, key)) && pd.configurable === false) {
         if ($) $[key] = val
     } else if (Array.isArray(val)) {
-        defArray(obj, key, SArray(val), $)
+        $ && defArray(obj, key, SArray(val), $)
     } else if (typeof val === 'object') {
         observable(val, $ && ($[key] = {}))
     } else {
