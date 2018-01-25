@@ -1,5 +1,6 @@
 import S from 's-js'
-import SArray from 's-array'
+import { default as newSArray } from 's-array'
+export { default as newSArray } from 's-array'
 
 function returnThis(this: any) {
     return this
@@ -44,7 +45,7 @@ function makeReactive(obj: any, key: string, val: any, $: any) {
     } else if (typeof val === 'function' || (pd = Object.getOwnPropertyDescriptor(obj, key)) && pd.configurable === false) {
         if ($) $[key] = val
     } else if (Array.isArray(val)) {
-        $ && defArray(obj, key, SArray(val), $)
+        $ && defArray(obj, key, newSArray(val), $)
     } else if (typeof val !== 'object') {
         defScalar(obj, key, val, $)
     } else if (key !== '_') {
@@ -82,15 +83,17 @@ function freezeFn(obj, fn) {
     }
 }
 
-export function bindPrototypeTo<T>(obj, pt: T): T {
+export function bindPrototypeTo<T>(obj, pt: T, overwrite?: boolean, freezeSuffix?: string): T {
     var x: any
     
     x = {}
     for (let key of Object.keys(pt)) {
         if (key === 'constructor') {
             // ignore
-        } else if ('$' === key.charAt(key.length - 1)) {
+        } else if (freezeSuffix && freezeSuffix === key.charAt(key.length - 1)) {
             x[key] = freezeFn(obj, pt[key])
+        } else if (!overwrite) {
+            x[key] = pt[key].bind(obj)
         } else {
             Object.defineProperty(obj, key, {
                 enumerable: false,

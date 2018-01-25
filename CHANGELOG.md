@@ -1,3 +1,8 @@
+## 0.6.0 (2018-01-25)
+
+* export `newSArray`
+* Add optional arg`overwrite` on function `bindPrototypeTo`
+
 ## 0.5.0 (2018-01-25)
 
 * `_` as non-enumerable object key
