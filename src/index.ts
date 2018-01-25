@@ -10,6 +10,14 @@ function throwThis(this: any) {
     throw this
 }
 
+function maybeProp(obj, key, value, yes?: boolean) {
+    yes && Object.defineProperty(obj, key, {
+        enumerable: false,
+        writable: false,
+        value
+    })
+}
+
 function defArray(obj, key, val, $) {
     var d
     Object.defineProperty(obj, key, d={
@@ -91,15 +99,9 @@ export function bindPrototypeTo<T>(obj, pt: T, overwrite?: boolean, freezeSuffix
         if (key === 'constructor') {
             // ignore
         } else if (freezeSuffix && freezeSuffix === key.charAt(key.length - 1)) {
-            x[key] = freezeFn(obj, pt[key])
-        } else if (!overwrite) {
-            x[key] = pt[key].bind(obj)
+            maybeProp(obj, key, (x[key] = freezeFn(obj, pt[key])), overwrite)
         } else {
-            Object.defineProperty(obj, key, {
-                enumerable: false,
-                writable: false,
-                value: (x[key] = pt[key].bind(obj))
-            })
+            maybeProp(obj, key, (x[key] = pt[key].bind(obj)), overwrite)
         }
     }
     

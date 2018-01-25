@@ -1,3 +1,7 @@
+## 0.7.0 (2018-01-25)
+
+* apply `overwrite` on freeze functions as well
+
 ## 0.6.0 (2018-01-25)
 
 * export `newSArray`
