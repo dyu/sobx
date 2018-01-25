@@ -1,6 +1,6 @@
 {
   "name": "sobx",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "s object/pojo observables for surplus",
   "author": "dyu",
   "main": "lib/index.js",
