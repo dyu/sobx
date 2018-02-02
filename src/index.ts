@@ -91,17 +91,37 @@ function freezeFn(obj, fn) {
     }
 }
 
-export function bindPrototypeTo<T>(obj, pt: T, overwrite?: boolean, freezeSuffix?: string): T {
-    var x: any
+export const enum BindFlags {
+    OVERWRITE = 1,
+    OWN_KEYS = 2
+}
+
+export function bindPrototypeTo<T>(obj, pt: T, flags?: BindFlags, freezeSuffix?: string): T {
+    let f = flags || 0,
+        overwrite = 0 !== (BindFlags.OVERWRITE & f),
+        x: any
     
     x = {}
-    for (let key of Object.keys(pt)) {
-        if (key === 'constructor') {
-            // ignore
-        } else if (freezeSuffix && freezeSuffix === key.charAt(key.length - 1)) {
-            maybeProp(obj, key, (x[key] = freezeFn(obj, pt[key])), overwrite)
-        } else {
-            maybeProp(obj, key, (x[key] = pt[key].bind(obj)), overwrite)
+    
+    if ((BindFlags.OWN_KEYS & f)) {
+        for (let key of Object.keys(pt)) {
+            if (key === 'constructor') {
+                // ignore
+            } else if (freezeSuffix && freezeSuffix === key.charAt(key.length - 1)) {
+                maybeProp(obj, key, (x[key] = freezeFn(obj, pt[key])), overwrite)
+            } else {
+                maybeProp(obj, key, (x[key] = pt[key]['bind'](obj)), overwrite)
+            }
+        }
+    } else {
+        for (var key in pt) {
+            if (key === 'constructor') {
+                // ignore
+            } else if (freezeSuffix && freezeSuffix === key.charAt(key.length - 1)) {
+                maybeProp(obj, key, (x[key] = freezeFn(obj, pt[key])), overwrite)
+            } else {
+                maybeProp(obj, key, (x[key] = pt[key]['bind'](obj)), overwrite)
+            }
         }
     }
     

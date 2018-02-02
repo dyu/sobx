@@ -1,3 +1,7 @@
+## 0.8.0 (2018-02-02)
+
+* `BindFlags` as 3rd arg of `bindPrototypeTo`
+
 ## 0.7.0 (2018-01-25)
 
 * apply `overwrite` on freeze functions as well
